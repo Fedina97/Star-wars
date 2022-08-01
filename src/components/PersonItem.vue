@@ -19,8 +19,6 @@
 <script>
 import ButtonItem from "@/components/UI/ButtonItem";
 
-const guid = require("js-guid");
-
 export default {
     name: "PersonItem",
     components: {ButtonItem},
@@ -30,10 +28,6 @@ export default {
             required: true,
         }
     },
-    mounted() {
-        const id = guid.Guid.newGuid()
-        this.person.id = id.StringGuid
-    }
 }
 
 </script>

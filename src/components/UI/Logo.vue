@@ -80,7 +80,6 @@ export default {
     }
 }
 
-/* Make the 3D work on the container */
 .starwars-demo {
     perspective: 800px;
     transform-style: preserve3d;

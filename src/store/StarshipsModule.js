@@ -1,10 +1,11 @@
 import axios from "axios";
+const guid = require("js-guid");
 
 export const starships = {
     state: () => ({
         starships: [],
-        searchQuery: '',
         isLoading: false,
+        searchQueryStarship: '',
         page: 1,
         totalPages: 0,
     }),
@@ -26,29 +27,31 @@ export const starships = {
         setStarshipPage(state, payload) {
             state.page = payload;
         },
-        setSearchQuery(state, searchQuery) {
-            state.searchQuery = searchQuery;
+        setSearchQueryStarship(state, searchQueryStarship) {
+            state.searchQueryStarship = searchQueryStarship;
         },
         setTotalPages(state, payload) {
             state.totalPages = payload;
         }
     },
     actions: {
-        getSearchQuery({commit}, searchQuery) {
-            commit('setSearchQuery', searchQuery)
-        },
-        async getStarships({state, commit, getters}) {
+        async getStarships({state, commit, getters}, search) {
             try {
                 commit('isLoading', true)
+                commit('setSearchQueryStarship', search)
                 const response = await axios.get(`https://swapi.dev/api/starships`, {
                     params: {
                         page: state.page,
-                        search: state.searchQuery,
+                        search,
                     },
                 })
                 commit('setStarshipPage',  state.page);
                 commit('setTotalPages', Math.ceil(response.data.count / 10))
-                commit('setStarships',  response.data.results);
+                commit('setStarships',  response.data.results.map(item => {
+                    const {StringGuid} = guid.Guid.newGuid()
+                    item = {...item, id: StringGuid};
+                    return item;
+                }))
             } catch (e) {
                 console.log(e, 'Ошибка')
             } finally {

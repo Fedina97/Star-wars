@@ -1,9 +1,17 @@
 <template>
     <div class="people">
         <div class="people-wrapper">
-            <navbar-panel/>
+            <navbar-panel>
+                <input
+                    class="input"
+                    :value="searchQueryStarship"
+                    @input="getStarships($event.target.value)"
+                    placeholder="Поиск..."
+                    type="text"
+                >
+            </navbar-panel>
             <div>
-                <starships-list
+                <starship-list
                     :starships="starshipsList"
                     v-if="!isLoading"
                 />
@@ -20,13 +28,13 @@
 </template>
 
 <script>
-import StarshipsList from '@/components/StarshipsList'
+import StarshipList from '@/components/StarshipList'
 import {mapState, mapActions, mapMutations, mapGetters} from 'vuex'
 import NavbarPanel from "@/components/NavbarPanel";
 import Pagination from "@/components/UI/Pagination";
 
 export default {
-    components: {Pagination, NavbarPanel, StarshipsList},
+    components: {Pagination, NavbarPanel, StarshipList},
     data() {
         return {
             visibleDialog: false,
@@ -51,7 +59,7 @@ export default {
     computed: {
         ...mapState({
             isLoading: state => state.starships.isLoading,
-            searchQuery: state => state.starships.searchQuery,
+            searchQueryStarship: state => state.starships.searchQueryStarship,
             page: state => state.starships.page,
             totalPages: state => state.starships.totalPages,
         }),

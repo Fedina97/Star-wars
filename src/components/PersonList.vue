@@ -11,7 +11,7 @@
               />
           </transition-group>
       </div>
-        <h2 v-else>
+        <h2 style="color: white" v-else>
             Список персонажей пуст
         </h2>
   </div>

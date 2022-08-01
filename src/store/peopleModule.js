@@ -1,5 +1,5 @@
 import axios from "axios";
-
+const guid = require("js-guid");
 export const persons = {
     state: () => ({
         persons: [],
@@ -23,7 +23,7 @@ export const persons = {
         setPersonLoading(state, bool) {
             state.isPersonLoading = bool;
         },
-        newSearchQuery(state, searchQueryPerson) {
+        setSearchQueryPerson(state, searchQueryPerson) {
             state.searchQueryPerson = searchQueryPerson;
         },
         setTotalPages(state, totalPages) {
@@ -34,21 +34,23 @@ export const persons = {
         },
     },
     actions: {
-        getPersonQuery({commit}, searchQueryPerson) {
-            commit('newSearchQuery', searchQueryPerson);
-        },
-       async fetchPersons({state, commit, getters}) {
+       async fetchPersons({state, commit, getters}, search) {
             try {
                 commit('setPersonLoading', true)
+                commit('setSearchQueryPerson', search)
                 const response = await axios.get(`https://swapi.dev/api/people`, {
                     params: {
                         page: state.page,
-                        search: state.searchQueryPerson
+                        search,
                     },
                 })
                 commit('setPage',  state.page);
                 commit('setTotalPages', Math.ceil(response.data.count / 10))
-                commit('setPersons',  response.data.results);
+                commit('setPersons',  response.data.results.map(item => {
+                    const {StringGuid} = guid.Guid.newGuid()
+                    item = {...item, id: StringGuid};
+                    return item;
+                }))
             } catch (e) {
                 console.log(e, 'Ошибка')
             } finally {
