@@ -1,7 +1,7 @@
 <template>
         <div class="about-person">
             <button-item class="back-btn" @click="$router.push('/starships')">Вернуться к списку</button-item>
-            <div class="person-info" v-bind="getStarship">
+            <div class="person-info">
                 <h1 class="person-name">{{starshipItem.name}}</h1>
                 <div class="person-card">
                     <div class="person-photo">
@@ -30,28 +30,14 @@ import ButtonItem from "@/components/UI/ButtonItem";
 export default {
     name: "StarshipsPage",
     components: {ButtonItem},
-    data() {
-        return {
-            starshipItem: '',
-        }
-    },
-    methods: {
-        getStarship() {
-            this.starshipsList.filter((el) => {
-                if (el.id === this.$route.params.id) {
-                    return this.starshipItem = {...el}
-                }
-            })
-        }
-    },
     computed: {
         ...mapGetters([
             'starshipsList'
-        ])
+        ]),
+        starshipItem() {
+            return this.starshipsList.find(el => el.id === this.$route.params.id)
+        }
     },
-    mounted() {
-        this.getStarship()
-    }
 }
 </script>
 

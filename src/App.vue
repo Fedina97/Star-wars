@@ -1,7 +1,7 @@
 <template>
   <div class="app">
       <div class="app-wrapper">
-          <router-view></router-view>
+          <router-view/>
       </div>
   </div>
 </template>
@@ -17,12 +17,4 @@
     box-sizing: border-box;
     font-family: monospace;
 }
-
-.back-btn {
-    margin: 25px 0 0 25px ;
-}
-
-/*.app {*/
-/*    padding: 20px;*/
-/*}*/
 </style>

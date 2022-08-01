@@ -1,7 +1,7 @@
 <template>
     <div class="navbar">
         <button-item class="back-btn" @click="$router.push('/catalog')">Вернуться к каталогу</button-item>
-        <search-bar/>
+        <slot></slot>
     </div>
 </template>
 

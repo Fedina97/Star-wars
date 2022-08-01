@@ -22,14 +22,6 @@ export default {
 </script>
 
 <style scoped>
-
-.wait {
-    display: flex;
-    height: calc(100vh - 400px);
-    color: #79c8f3;
-    align-items: center;
-    justify-content: center;
-}
 .lds-spinner {
     color: black;
     display: flex;

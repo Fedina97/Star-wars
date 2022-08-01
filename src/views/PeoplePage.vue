@@ -1,7 +1,15 @@
 <template>
     <div class="people">
         <div class="people-wrapper">
-            <navbar-panel/>
+            <navbar-panel>
+                <input
+                    class="input"
+                    :value="searchQueryPerson"
+                    @input="fetchPersons($event.target.value)"
+                    placeholder="Поиск..."
+                    type="text"
+                >
+            </navbar-panel>
             <div>
                 <person-list
                     :persons="personsList"
@@ -38,7 +46,6 @@ export default {
         }),
         ...mapActions({
             fetchPersons: 'fetchPersons',
-            getPersonQuery: 'getPersonQuery'
         }),
         changePage(pageNumber) {
             this.updatePage(pageNumber)

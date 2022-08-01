@@ -2,18 +2,18 @@
     <div class="about-person">
         <button-item class="back-btn" @click="$router.push('/people')">Вернуться к списку</button-item>
         <div class="person-info" v-bind="getPerson">
-            <h1 class="person-name">{{item.name}}</h1>
+            <h1 class="person-name">{{personItem.name}}</h1>
             <div class="person-card">
                 <div class="person-photo">
                     <img src="https://via.placeholder.com/400x500">
                 </div>
                 <div class="info-wrapper">
-                    <p class="info-item">Gender: {{item.gender}}</p>
-                    <p class="info-item">Birth Year: {{item.birth_year}}</p>
-                    <p class="info-item">Height: {{item.height}}</p>
-                    <p class="info-item">Mass: {{item.mass}}</p>
-                    <p class="info-item">Eye Color: {{item.eye_color}}</p>
-                    <p class="info-item">Skin Color: {{item.skin_color}}</p>
+                    <p class="info-item">Gender: {{personItem.gender}}</p>
+                    <p class="info-item">Birth Year: {{personItem.birth_year}}</p>
+                    <p class="info-item">Height: {{personItem.height}}</p>
+                    <p class="info-item">Mass: {{personItem.mass}}</p>
+                    <p class="info-item">Eye Color: {{personItem.eye_color}}</p>
+                    <p class="info-item">Skin Color: {{personItem.skin_color}}</p>
 
                 </div>
             </div>
@@ -28,27 +28,11 @@ import ButtonItem from "@/components/UI/ButtonItem";
 export default {
     name: "AboutPerson",
     components: {ButtonItem},
-    data() {
-        return {
-            item: ''
-        }
-    },
-    methods: {
-        getPerson() {
-            this.personsList.filter((el) => {
-                if(el.id === this.$route.params.id) {
-                    return this.item = {...el};
-                }
-            })
-        }
-    },
     computed: {
-        ...mapGetters([
-            'personsList'
-        ]),
-    },
-    mounted() {
-        this.getPerson();
+        ...mapGetters(['personsList']),
+        personItem() {
+            return this.personsList.find(el => el.id === this.$route.params.id)
+        }
     },
 }
 </script>
